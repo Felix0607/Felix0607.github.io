@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Felix</title>
+    <link>http://felix.github.io/</link>
+    <description>Recent content on Felix</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-tw</language>
+    <lastBuildDate>Mon, 09 Dec 2019 13:51:27 +0000</lastBuildDate><atom:link href="http://felix.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AutoComplete加上ajax使用教學</title>
+      <link>http://felix.github.io/posts/jquery-ui-autocomplete-ajax%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/</link>
+      <pubDate>Mon, 09 Dec 2019 13:51:27 +0000</pubDate>
+      
+      <guid>http://felix.github.io/posts/jquery-ui-autocomplete-ajax%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/</guid>
+      <description>&lt;p&gt;AutoComplete是什麼，例如在chrom上做任何登入時都會問你要不要儲存帳號密碼，下次在你登入時就會自動幫你帶入這就是AutoComplete。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Entity Framework Core and Database First</title>
+      <link>http://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</link>
+      <pubDate>Fri, 19 Jul 2019 15:19:09 +0000</pubDate>
+      
+      <guid>http://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</guid>
+      <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;使用Entity Framework在ASP.Net Core裡建立資料庫的連線，並且使用Database First 的方式進行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;認識orm&#34;&gt;認識ORM&lt;/h2&gt;
+&lt;p&gt;在了解Entity Framework之前我們需要先了解ORM是什麼?&lt;/p&gt;
+&lt;p&gt;程式設計師過去為了要連結存取資料庫時需要去學習資料庫指令，所以研究出如何用程式設計模型和資料庫結合在一起，因而誕生出物件關聯對應&lt;strong&gt;Object Relationship Mapping&lt;/strong&gt;  ，可以代替你去和資料庫做溝通並且幫我們把資料自動轉成物件的工具。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>搞懂記憶體快取 Memory Cache</title>
+      <link>http://felix.github.io/posts/cachememory/</link>
+      <pubDate>Sun, 14 Jul 2019 23:35:41 +0000</pubDate>
+      
+      <guid>http://felix.github.io/posts/cachememory/</guid>
+      <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;當需要重複抓取資料時，而資料量又少且不常變動，造成效能降低，此時可以使用Memory Cache，將資料暫存記憶體中，因此能夠改善Web Application效能&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>所有文章</title>
+      <link>http://felix.github.io/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://felix.github.io/archives/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>關於我</title>
+      <link>http://felix.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://felix.github.io/about/</guid>
+      <description>有一隻愛撒嬌的美短肥貓的全端工程師，隨心紀錄所遇到的問題或是想研究的技術。</description>
+    </item>
+    
+  </channel>
+</rss>

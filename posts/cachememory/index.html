@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>搞懂記憶體快取 Memory Cache &middot; Felix</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://felix.github.io/"><h1>Felix</h1></a>
+      <p class="lead">
+       有一隻愛撒嬌的美短肥貓的全端工程師，隨心紀錄所遇到的問題或是想研究的技術。 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://felix.github.io/">Home</a> </li>
+        <li><a href="/archives/"> 所有文章 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>搞懂記憶體快取 Memory Cache</h1>
+  <time datetime=2019-07-14T23:35:41Z class="post-date">Sun, Jul 14, 2019</time>
+  <h3 id="前言">前言</h3>
+<blockquote>
+<p>當需要重複抓取資料時，而資料量又少且不常變動，造成效能降低，此時可以使用Memory Cache，將資料暫存記憶體中，因此能夠改善Web Application效能</p>
+</blockquote>
+<h3 id="如何設計快取">如何設計快取</h3>
+<blockquote>
+<p>使用快取，需要注意的是資料一致性的問題，要如何確保在資料一致前提下怎麼設計快取能夠使用最長的快取 。</p>
+</blockquote>
+<ul>
+<li>Set - 快取存在時會直接覆寫</li>
+<li>Cache[key]=value - 快取已存在時一樣會直接覆寫，但無法設定清除快取機制</li>
+<li>Add - 快取已存在時不會覆寫，會回傳false結果告知失敗</li>
+</ul>
+<h3 id="清除快取的機制-cacheitempolicy">清除快取的機制 （CacheItemPolicy）</h3>
+<p>清除快取資料能夠分為兩種：</p>
+<ul>
+<li>
+<p>時間到期（Expiration） ：</p>
+<ul>
+<li>
+<p>絕對時間 （AbsoluteExpiration）：DateTimeOffset  時間超過設定的時間後，就會清除快取。</p>
+</li>
+<li>
+<p>時間空隔（SlidingExpiration） : TimeSpan 快取資料多久的時間沒有被使用，就會清除快取。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>資料變動 （ChangeMonitor）</p>
+<ul>
+<li>
+<p>實體檔案變動 （HostFileChangeMonitor）：檔案內容更動時就會清除快取。</p>
+</li>
+<li>
+<p>資料庫變動（SqlChangeMonitor）：當資料庫指令結果有不同就會清除快取。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="memorycache的定義">MemoryCache的定義</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Constructors:
+MemoryCache(IOptions)
+
+Properties:
+Count<span style="color:#960050;background-color:#1e0010">（</span>Gets the count of the current entries <span style="color:#66d9ef">for</span> diagnostic purposes.<span style="color:#960050;background-color:#1e0010">）</span>
+
+Methods:
+Compact(Double)
+CreateEntry(Object)
+Dispose()
+Dispose(Boolean)
+Finalize()
+Remove(Object)
+TryGetValue(Object, Object)
+
+Extension Methods:
+Get(IMemoryCache, Object)
+Get(IMemoryCache, Object)
+GetOrCreate(IMemoryCache, Object, Func)
+GetOrCreateAsync(IMemoryCache, Object, Func&gt;)
+Set(IMemoryCache, Object, TItem)
+Set(IMemoryCache, Object, TItem, MemoryCacheEntryOptions)
+Set(IMemoryCache, Object, TItem, IChangeToken)
+Set(IMemoryCache, Object, TItem, DateTimeOffset)
+Set(IMemoryCache, Object, TItem, TimeSpan)
+TryGetValue(IMemoryCache, Object, TItem)
+</code></pre></div><blockquote>
+<p>這裡會使用到的為擴充方法</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#">Set(IMemoryCache, Object, TItem, MemoryCacheEntryOptions)
+
+TryGetValue(Object, Object)
+</code></pre></div><h3 id="使用方式">使用方式</h3>
+<blockquote>
+<p>接下來的快取實作會搭配時間到期的清除快取機制。</p>
+</blockquote>
+<h4 id="一般還是搭配di使用">一般還是搭配DI使用</h4>
+<blockquote>
+<p>在Startup裡的ConfigureServices裡加上程式碼。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> ConfigureServices(IServiceCollection services)
+{
+    services.AddMemoryCache();  <span style="color:#75715e">// 這一行就可以了
+</span><span style="color:#75715e"></span>    services.AddMvc();
+}
+</code></pre></div><h4 id="設定完即可di注入使用">設定完即可DI注入使用</h4>
+<blockquote>
+<p>使用IMemoryCache為注入的對象</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AccountController</span> : Controller
+{
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> IMemoryCache memoryCache;
+
+    <span style="color:#66d9ef">public</span> AccountController(IMemoryCache _memoryCache)
+    {
+        <span style="color:#66d9ef">this</span>.memoryCache = _memoryCache;
+    }
+}
+</code></pre></div><h4 id="絕對時間測試absoluteexpiration">絕對時間測試（AbsoluteExpiration）</h4>
+<blockquote>
+<p>時間到了會清除快取</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> IEnumerable&lt;TimetableEnum&gt; GetTimetableEnums()
+{
+IEnumerable&lt;TimetableEnum&gt; timetableEnumDtos;
+<span style="color:#75715e">// 檢查cache是否有時刻表，TryGetValue回傳的是bool，
+</span><span style="color:#75715e">// 在快取查不到資料時回傳false，所以這裡要使用反向進入if執行cache
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> (!_cache.TryGetValue(<span style="color:#e6db74">&#34;TimetableEnum&#34;</span>, <span style="color:#66d9ef">out</span> timetableEnumDtos))
+{
+  <span style="color:#75715e">//拿取火車時刻表資料
+</span><span style="color:#75715e"></span>  crmLogEnumDtos = _InfoDbRepo.GetTimetableEnum(); 
+  <span style="color:#75715e">//將資料儲存到快取中，並且設定一天的時間到了會清除快取的資料
+</span><span style="color:#75715e"></span>  _cache.Set(
+    <span style="color:#e6db74">&#34;TimetableEnum&#34;</span>, 
+    timetableEnumDtos,
+    DateTimeOffset.Now.AddDays(<span style="color:#ae81ff">1</span>)
+    ); 
+}
+<span style="color:#66d9ef">return</span> timetableEnumDtos;
+}
+</code></pre></div><h4 id="時間空隔測試slidingexpiration">時間空隔測試（SlidingExpiration）</h4>
+<blockquote>
+<p>時間內沒有使用快取會清除快取</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> IEnumerable&lt;TimetableEnum&gt; GetTimetableEnums()
+{
+IEnumerable&lt;TimetableEnum&gt; timetableEnumDtos;
+<span style="color:#66d9ef">if</span> (!_cache.TryGetValue(<span style="color:#e6db74">&#34;TimetableEnum&#34;</span>, <span style="color:#66d9ef">out</span> timetableEnumDtos))
+{
+  crmLogEnumDtos = _InfoDbRepo.GetTimetableEnum(); 
+  <span style="color:#75715e">//將資料儲存到快取中，並且設定15分鐘內如果沒有使用到這筆快取資料則會清除快取的資料
+</span><span style="color:#75715e"></span>  _cache.Set(<span style="color:#e6db74">&#34;TimetableEnum&#34;</span>, timetableEnumDtos, TimeSpan.FromMinutes(<span style="color:#ae81ff">15</span>)); 
+}
+<span style="color:#66d9ef">return</span> timetableEnumDtos;
+}
+</code></pre></div><h4 id="參考資料">參考資料</h4>
+<p><a href="https://docs.microsoft.com/zh-tw/aspnet/core/performance/caching/memory?view=aspnetcore-2.2">https://docs.microsoft.com/zh-tw/aspnet/core/performance/caching/memory?view=aspnetcore-2.2</a></p>
+<p><a href="https://dotblogs.com.tw/lazycodestyle/2016/07/24/155838">https://dotblogs.com.tw/lazycodestyle/2016/07/24/155838</a></p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10208814?sc=iThelpR">https://ithelp.ithome.com.tw/articles/10208814?sc=iThelpR</a></p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

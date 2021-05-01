@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Entity Framework Core and Database First &middot; Felix</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://felix.github.io/"><h1>Felix</h1></a>
+      <p class="lead">
+       有一隻愛撒嬌的美短肥貓的全端工程師，隨心紀錄所遇到的問題或是想研究的技術。 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://felix.github.io/">Home</a> </li>
+        <li><a href="/archives/"> 所有文章 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>Entity Framework Core and Database First</h1>
+  <time datetime=2019-07-19T15:19:09Z class="post-date">Fri, Jul 19, 2019</time>
+  <h2 id="前言">前言</h2>
+<blockquote>
+<p>使用Entity Framework在ASP.Net Core裡建立資料庫的連線，並且使用Database First 的方式進行。</p>
+</blockquote>
+<h2 id="認識orm">認識ORM</h2>
+<p>在了解Entity Framework之前我們需要先了解ORM是什麼?</p>
+<p>程式設計師過去為了要連結存取資料庫時需要去學習資料庫指令，所以研究出如何用程式設計模型和資料庫結合在一起，因而誕生出物件關聯對應<strong>Object Relationship Mapping</strong>  ，可以代替你去和資料庫做溝通並且幫我們把資料自動轉成物件的工具。</p>
+<h2 id="entity-framework-和-entity-framework-core-是什麼">Entity Framework 和 Entity Framework Core 是什麼</h2>
+<p>Entity Framework 就是微軟實現ORM的工具 ，讓開發人員可以使用.Net的物件以及使用LINQ的方式來處理資料庫的資料。</p>
+<p>Enitiy Framework Core 則是完全重寫的EF6，且是跨平台產品可以在.NET Core 和 .NET Framework。</p>
+<p>目前.NET Framework兩者都可以使用而.NET Core 只支援EF Core。</p>
+<p>想要知道兩者差異在哪可以上微軟官網查看更多 :</p>
+<p><a href="https://docs.microsoft.com/zh-tw/ef/efcore-and-ef6/index">https://docs.microsoft.com/zh-tw/ef/efcore-and-ef6/index</a></p>
+<h2 id="使用的建制方式">使用的建制方式</h2>
+<p>目前EF Core 拿掉過去在 EF時所用的Model First只剩下兩種建置方式 :</p>
+<ol>
+<li>
+<p>Code First</p>
+<p>顧名思義，先在.Net建立好你要的類別並指定型別（也就是資料庫的Table），並且設定好相關的資料庫連結程式，執行後，就可以使用DB連接工具（SSMS) 來查看剛剛建立好的Table。</p>
+<p>想要了解更多的可以參考 :</p>
+<p><a href="https://dotblogs.com.tw/armycoding/2018/11/04/212725">https://dotblogs.com.tw/armycoding/2018/11/04/212725</a></p>
+</li>
+<li>
+<p>Code First with Database (也可以稱作Database First)</p>
+<p>先準備一個測試的資料庫，建好Table後在.Net 的Package Manger Console下連結指令後會產生對應的資料表模型。</p>
+</li>
+</ol>
+<h2 id="實做-ef-core-database-first">實做 EF Core (Database First)</h2>
+<h3 id="事前準備">事前準備</h3>
+<blockquote>
+<ol>
+<li>先建立一個.NET Core 空專案</li>
+<li>準備一個資料庫並且建立一個Table 並且要注意一定要設定主鍵 ( Primary key )</li>
+</ol>
+</blockquote>
+<h3 id="安裝相關套件">安裝相關套件</h3>
+<p>Tools &gt; NuGet Package Manager &gt; Manage NuGet  Packages for Solution &gt; Browse</p>
+<p>安裝 Microsoft.EntityFrameworkCore.SqlServer、Microsoft.EntityFrameworkCore.Tools</p>
+<p>{% asset_img 1.png %}</p>
+<p>{% asset_img 2.png %}</p>
+<h3 id="了解連結資料庫指令">了解連結資料庫指令</h3>
+<blockquote>
+<p>注意：一定要新增好一個資料庫並且至少有一個Table且有設定主鍵。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Scaffold-DbContext <span style="color:#e6db74">&#34;Server=[DB Sever Name];Database=[DB Name];Trusted_Connection=True;&#34;</span> Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force -UseDatabaseNames
+</code></pre></div><p><code>Scaffold-DbContext</code> : 為剛剛安裝的Tool套件指令</p>
+<p><code>-OutputDir </code> : 資料輸出到根目錄的哪一個資料夾，這裡為Models資料夾</p>
+<p><code>Server</code>  :  DB Sever Name</p>
+<p><code>Database</code>  : DB Name</p>
+<p><code>Trusted_Connection</code> : 依開啟資料庫的方式而定</p>
+<p>如果為 <code>true</code> 直接透過信任連線連接不是使用帳號密碼連線DB</p>
+<p>如果是非信任連線則必須再多指定User ID 和 Password 兩個屬性 (下圖）。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#">Scaffold-DbContext <span style="color:#e6db74">&#34;Server=[DB Sever Name];Database=[DB Name];
+</span><span style="color:#e6db74"></span>User ID=[Username];Password=[Password];Trusted_Connection=False;<span style="color:#e6db74">&#34; Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Force -UseDatabaseNames
+</span></code></pre></div><p><code>-Force</code> : 產生出的Class檔案會去強制覆寫現有的檔案</p>
+<p><code>-UseDatabaseNames</code> : 保留名稱與資料庫一致</p>
+<p><code>-Tables</code> : 可以指定需要的 Table 有哪些，使用逗號做區隔（下圖）</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"> <span style="color:#960050;background-color:#1e0010">（省略前面）</span>-Tables MyTable1,MyTable2
+</code></pre></div><h3 id="輸入連結指令">輸入連結指令</h3>
+<p>Tool &gt; NuGet Package Manager &gt; Package Manger Console</p>
+<p>在 <code>PM&gt;</code> 輸入指令後Enter :</p>
+<p>{% asset_img 3.png %}</p>
+<h3 id="成功連接到db-並且取得資料">成功連接到DB 並且取得資料</h3>
+<p>資料表的Model(資料模型)以及DbContext連線資訊等等都會自動幫你建置好，比起EF6的.edmx 速度變快且更簡單上手。</p>
+<p>{% asset_img 4.png %}</p>
+<p><strong>下一篇，會繼續介紹如何存取資料，如果內容有誤請再幫忙指正，謝謝～</strong></p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>

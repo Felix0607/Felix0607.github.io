@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-tw" lang="zh-tw">
+<head>
+  <link href="https://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.82.1" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AutoComplete加上ajax使用教學 &middot; Felix</title>
+  <meta name="description" content="" />
+
+  
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/poole.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/syntax.css">
+  <link type="text/css" rel="stylesheet" href="http://felix.github.io/css/hyde.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface|PT+Sans:400,400i,700">
+
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
+
+  
+  
+</head>
+
+  <body class=" ">
+  <aside class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="http://felix.github.io/"><h1>Felix</h1></a>
+      <p class="lead">
+       有一隻愛撒嬌的美短肥貓的全端工程師，隨心紀錄所遇到的問題或是想研究的技術。 
+      </p>
+    </div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="http://felix.github.io/">Home</a> </li>
+        <li><a href="/archives/"> 所有文章 </a></li>
+      </ul>
+    </nav>
+
+    <p>&copy; 2021. All rights reserved. </p>
+  </div>
+</aside>
+
+    <main class="content container">
+    <div class="post">
+  <h1>AutoComplete加上ajax使用教學</h1>
+  <time datetime=2019-12-09T13:51:27Z class="post-date">Mon, Dec 9, 2019</time>
+  <p>AutoComplete是什麼，例如在chrom上做任何登入時都會問你要不要儲存帳號密碼，下次在你登入時就會自動幫你帶入這就是AutoComplete。</p>
+<p>分別記錄有使用AJAX和使用JS陣列的方式，以及介紹常用的參數設定。</p>
+<p>這裡有<a href="https://jqueryui.com/autocomplete/">JQuery Demo範例</a>供參考。</p>
+<h2 id="範例1---使用js的陣列無ajax的資料">範例1 - 使用JS的陣列無ajax的資料</h2>
+<h4 id="建立想要提供的資訊">建立想要提供的資訊</h4>
+<p>JavaScript:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Tags</span> <span style="color:#f92672">=</span> [
+      <span style="color:#e6db74">&#34;ActionScript&#34;</span>,
+      <span style="color:#e6db74">&#34;AppleScript&#34;</span>,
+      <span style="color:#e6db74">&#34;Asp&#34;</span>,
+      <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+      <span style="color:#e6db74">&#34;C&#34;</span>,
+      <span style="color:#e6db74">&#34;C++&#34;</span>,
+      <span style="color:#e6db74">&#34;Clojure&#34;</span>,
+      <span style="color:#e6db74">&#34;COBOL&#34;</span>,
+      <span style="color:#e6db74">&#34;ColdFusion&#34;</span>,
+    ]; <span style="color:#75715e">//建立想要提供給使用者自動帶入的資訊(JS物件陣列)
+</span></code></pre></div><p>HTML:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tags&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt; 
+</code></pre></div><h4 id="設定jquery-autocomplete---基本範例">設定JQuery AutoComplete() - 基本範例</h4>
+<p>JQuery:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#a6e22e">$</span>( <span style="color:#e6db74">&#34;#tags&#34;</span> ).<span style="color:#a6e22e">autocomplete</span>({
+      <span style="color:#a6e22e">source</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Tags</span>, <span style="color:#75715e">//將資訊丟進Source參數裡
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">minLength</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e">//使用者最少輸入多少個字才啟動autocomplete
+</span><span style="color:#75715e"></span>    });
+</code></pre></div><h4 id="先建立想要提供的資訊使用js的陣列無ajax">先建立想要提供的資訊(使用JS的陣列無ajax)</h4>
+<p>JavaScript:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Tags</span> <span style="color:#f92672">=</span> [
+      <span style="color:#e6db74">&#34;ActionScript&#34;</span>,
+      <span style="color:#e6db74">&#34;AppleScript&#34;</span>,
+      <span style="color:#e6db74">&#34;Asp&#34;</span>,
+      <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+      <span style="color:#e6db74">&#34;C&#34;</span>,
+      <span style="color:#e6db74">&#34;C++&#34;</span>,
+      <span style="color:#e6db74">&#34;Clojure&#34;</span>,
+      <span style="color:#e6db74">&#34;COBOL&#34;</span>,
+      <span style="color:#e6db74">&#34;ColdFusion&#34;</span>,
+    ]; <span style="color:#75715e">//建立想要提供給使用者自動帶入的資訊
+</span></code></pre></div><p>HTML:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tags&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt; 
+</code></pre></div><h4 id="設定jquery-autocomplete---基本範例-1">設定JQuery AutoComplete() - 基本範例</h4>
+<p>JQuery:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#a6e22e">$</span>( <span style="color:#e6db74">&#34;#tags&#34;</span> ).<span style="color:#a6e22e">autocomplete</span>({
+      <span style="color:#a6e22e">source</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Tags</span>, <span style="color:#75715e">//將資訊丟進Source參數裡
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">minLength</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e">//使用者最少輸入多少個字才啟動autocomplete
+</span><span style="color:#75715e"></span>    });
+</code></pre></div><h4 id="先建立想要提供的資訊使用js的陣列無ajax-1">先建立想要提供的資訊(使用JS的陣列無ajax)</h4>
+<p>JavaScript:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">  <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Tags</span> <span style="color:#f92672">=</span> [
+      <span style="color:#e6db74">&#34;ActionScript&#34;</span>,
+      <span style="color:#e6db74">&#34;AppleScript&#34;</span>,
+      <span style="color:#e6db74">&#34;Asp&#34;</span>,
+      <span style="color:#e6db74">&#34;BASIC&#34;</span>,
+      <span style="color:#e6db74">&#34;C&#34;</span>,
+      <span style="color:#e6db74">&#34;C++&#34;</span>,
+      <span style="color:#e6db74">&#34;Clojure&#34;</span>,
+      <span style="color:#e6db74">&#34;COBOL&#34;</span>,
+      <span style="color:#e6db74">&#34;ColdFusion&#34;</span>,
+    ]; <span style="color:#75715e">//建立想要提供給使用者自動帶入的資訊
+</span></code></pre></div><p>HTML:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;tags&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt; 
+</code></pre></div><h4 id="設定jquery-autocomplete---基本範例-2">設定JQuery AutoComplete() - 基本範例</h4>
+<p>JQuery:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">    <span style="color:#a6e22e">$</span>( <span style="color:#e6db74">&#34;#tags&#34;</span> ).<span style="color:#a6e22e">autocomplete</span>({
+      <span style="color:#a6e22e">source</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Tags</span>, <span style="color:#75715e">//將資訊丟進Source參數裡
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">minLength</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> <span style="color:#75715e">//使用者最少輸入多少個字才啟動autocomplete
+</span><span style="color:#75715e"></span>    });
+</code></pre></div><h2 id="範例2---使用ajax到資料庫取得資料多個欄位自動帶入">範例2 - 使用ajax到資料庫取得資料(多個欄位自動帶入)</h2>
+<h4 id="後端取得資料回傳給前端">後端取得資料回傳給前端</h4>
+<p>ASP.NET C#:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C#" data-lang="C#"><span style="color:#a6e22e">  		[HttpGet]</span> 
+        <span style="color:#66d9ef">public</span> ActionResult SearchAccountContact (<span style="color:#66d9ef">string</span> key) 
+        {	<span style="color:#75715e">//參數key為使用者輸入在input的資訊
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">var</span> data = db.userAccount 
+                .Where(s =&gt; s.Name.Contains(key)) 
+                .Take(<span style="color:#ae81ff">5</span>) <span style="color:#75715e">//拿取前五筆資料配對的資料
+</span><span style="color:#75715e"></span>                .Select(r =&gt; <span style="color:#66d9ef">new</span> 
+                        { <span style="color:#66d9ef">value</span> = r.UserID,
+                         label = r.Name, 
+                         phone = r.Telphone,
+                         email = r.EMail 
+                        }).ToArray();
+            <span style="color:#66d9ef">return</span> Json(data, JsonRequestBehavior.AllowGet);
+        
+</code></pre></div><h4 id="建立多個輸入欄位">建立多個輸入欄位</h4>
+<p>HTML:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt; //使用者輸名子時啟動自動完成配對
+&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;id&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;
+&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;phone&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;
+&lt;<span style="color:#f92672">input</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;email&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text&#34;</span> <span style="color:#a6e22e">placeholder</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>&gt;
+</code></pre></div><h4 id="多欄位自動帶入">多欄位自動帶入</h4>
+<p>JQuery + Ajax:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#name&#34;</span>).<span style="color:#a6e22e">autocomplete</span>({
+        <span style="color:#a6e22e">minLength</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>,
+        <span style="color:#a6e22e">source</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">request</span>, <span style="color:#a6e22e">response</span>) {
+            <span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">ajax</span>({
+                <span style="color:#a6e22e">url</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;@Url.Action(&#34;SearchContactAccount&#34;)&#39;</span>, <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">type</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Get&#34;</span>,
+                <span style="color:#a6e22e">dataType</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;json&#34;</span>,
+                <span style="color:#a6e22e">data</span><span style="color:#f92672">:</span> {
+                    <span style="color:#a6e22e">key</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">request</span>.<span style="color:#a6e22e">term</span>    <span style="color:#75715e">//Name欄位輸入的資訊傳給後端
+</span><span style="color:#75715e"></span>                },
+                <span style="color:#75715e">//成功取得資料後用Map來整理回傳的資料
+</span><span style="color:#75715e"></span>                <span style="color:#a6e22e">success</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">data</span>) { 
+                    <span style="color:#a6e22e">response</span>(<span style="color:#a6e22e">$</span>.<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">data</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">item</span>) {
+                        <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">item</span>); <span style="color:#75715e">//練習時印出來方便觀看資料的長相
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">return</span> {
+                            <span style="color:#75715e">// label和value是基本參數
+</span><span style="color:#75715e"></span>                            <span style="color:#a6e22e">label</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">label</span>,  <span style="color:#75715e">//列表所顯示的文字
+</span><span style="color:#75715e"></span>                            <span style="color:#a6e22e">value</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">value</span>, 	<span style="color:#75715e">//列表選項的值
+</span><span style="color:#75715e"></span>                            <span style="color:#a6e22e">phone</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">phone</span>,	<span style="color:#75715e">//自訂義要多帶的值
+</span><span style="color:#75715e"></span>                            <span style="color:#a6e22e">email</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">email</span>	<span style="color:#75715e">//自訂義要多帶的值
+</span><span style="color:#75715e"></span>                        };
+                    }));
+                }
+            });
+        },
+    	<span style="color:#75715e">//focus參數事件介紹 : 在下拉選單匹配時如果滑鼠有焦點到會觸發事件
+</span><span style="color:#75715e"></span>    	<span style="color:#75715e">//下方是指當使用者只是焦點到某個選項就將名子帶#name輸入框中
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">focus</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>, <span style="color:#a6e22e">ui</span>) {
+            <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#contactPeople&#34;</span>).<span style="color:#a6e22e">val</span>(<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">label</span>);
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        },
+    	<span style="color:#75715e">//select參數事件介紹 : 使用者選擇下拉式某項目後觸發事件
+</span><span style="color:#75715e"></span>    	<span style="color:#75715e">//當使用者選擇某項目後自動將所有的值帶進輸入框中
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">select</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">event</span>, <span style="color:#a6e22e">ui</span>) {
+            <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#contactPeople&#34;</span>).<span style="color:#a6e22e">val</span>(<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">label</span>);
+            <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#contactAccount&#34;</span>).<span style="color:#a6e22e">val</span>(<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">value</span>);
+            <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#contactPhone&#34;</span>).<span style="color:#a6e22e">val</span>(<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">phone</span>);
+            <span style="color:#a6e22e">$</span>(<span style="color:#e6db74">&#34;#contactEMail&#34;</span>).<span style="color:#a6e22e">val</span>(<span style="color:#a6e22e">ui</span>.<span style="color:#a6e22e">item</span>.<span style="color:#a6e22e">email</span>);
+            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+        }
+    });
+</code></pre></div><h2 id="結尾">結尾</h2>
+<p>如果想了解更多參數可以至<a href="https://api.jqueryui.com/autocomplete/">JQuery的API Documentation</a>。</p>
+</div>
+
+
+    </main>
+
+    
+      
+    
+  </body>
+</html>
