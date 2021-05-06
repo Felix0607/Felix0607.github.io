@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C# on Felix</title>
-    <link>http://felix.github.io/tags/c#/</link>
+    <link>https://felix.github.io/tags/c#/</link>
     <description>Recent content in C# on Felix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Sun, 14 Jul 2019 23:35:41 +0000</lastBuildDate><atom:link href="http://felix.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 14 Jul 2019 23:35:41 +0000</lastBuildDate><atom:link href="https://felix.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>搞懂記憶體快取 Memory Cache</title>
-      <link>http://felix.github.io/posts/cachememory/</link>
+      <link>https://felix.github.io/posts/cachememory/</link>
       <pubDate>Sun, 14 Jul 2019 23:35:41 +0000</pubDate>
       
-      <guid>http://felix.github.io/posts/cachememory/</guid>
+      <guid>https://felix.github.io/posts/cachememory/</guid>
       <description>&lt;h3 id=&#34;前言&#34;&gt;前言&lt;/h3&gt;
 &lt;blockquote&gt;
 &lt;p&gt;當需要重複抓取資料時，而資料量又少且不常變動，造成效能降低，此時可以使用Memory Cache，將資料暫存記憶體中，因此能夠改善Web Application效能&lt;/p&gt;
