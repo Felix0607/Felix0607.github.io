@@ -2,52 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://felix.github.io/tags/ajax/</loc>
+    <loc>http://felix.github.io/tags/ajax/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/posts/jquery-ui-autocomplete-ajax%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/</loc>
+    <loc>http://felix.github.io/posts/jquery-ui-autocomplete-ajax%E4%BD%BF%E7%94%A8%E6%95%99%E5%AD%B8/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/categories/</loc>
+    <loc>http://felix.github.io/categories/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/</loc>
+    <loc>http://felix.github.io/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/tags/jquery/</loc>
+    <loc>http://felix.github.io/tags/jquery/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/categories/jquery/</loc>
+    <loc>http://felix.github.io/categories/jquery/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/posts/</loc>
+    <loc>http://felix.github.io/posts/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/tags/</loc>
+    <loc>http://felix.github.io/tags/</loc>
     <lastmod>2019-12-09T13:51:27+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/tags/asp.net-core/</loc>
+    <loc>http://felix.github.io/tags/asp.net-core/</loc>
     <lastmod>2019-07-19T15:19:09+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/categories/asp.net-core/</loc>
+    <loc>http://felix.github.io/categories/asp.net-core/</loc>
     <lastmod>2019-07-19T15:19:09+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/tags/entity-framework-core/</loc>
+    <loc>http://felix.github.io/tags/entity-framework-core/</loc>
     <lastmod>2019-07-19T15:19:09+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</loc>
+    <loc>http://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</loc>
     <lastmod>2019-07-19T15:19:09+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/tags/c#/</loc>
+    <loc>http://felix.github.io/tags/c#/</loc>
     <lastmod>2019-07-14T23:35:41+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/posts/cachememory/</loc>
+    <loc>http://felix.github.io/posts/cachememory/</loc>
     <lastmod>2019-07-14T23:35:41+00:00</lastmod>
   </url><url>
-    <loc>https://felix.github.io/series/</loc>
+    <loc>http://felix.github.io/series/</loc>
   </url><url>
-    <loc>https://felix.github.io/archives/</loc>
+    <loc>http://felix.github.io/archives/</loc>
   </url><url>
-    <loc>https://felix.github.io/about/</loc>
+    <loc>http://felix.github.io/about/</loc>
   </url>
 </urlset>
