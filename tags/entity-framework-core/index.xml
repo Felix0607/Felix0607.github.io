@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Entity Framework Core on Felix</title>
-    <link>http://felix.github.io/tags/entity-framework-core/</link>
+    <link>https://felix.github.io/tags/entity-framework-core/</link>
     <description>Recent content in Entity Framework Core on Felix</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Fri, 19 Jul 2019 15:19:09 +0000</lastBuildDate><atom:link href="http://felix.github.io/tags/entity-framework-core/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 19 Jul 2019 15:19:09 +0000</lastBuildDate><atom:link href="https://felix.github.io/tags/entity-framework-core/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Entity Framework Core and Database First</title>
-      <link>http://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</link>
+      <link>https://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</link>
       <pubDate>Fri, 19 Jul 2019 15:19:09 +0000</pubDate>
       
-      <guid>http://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</guid>
+      <guid>https://felix.github.io/posts/asp-net-core-entity-framework-core-database-first/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;使用Entity Framework在ASP.Net Core裡建立資料庫的連線，並且使用Database First 的方式進行。&lt;/p&gt;
