@@ -16,10 +16,7 @@
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;使用Entity Framework在ASP.Net Core裡建立資料庫的連線，並且使用Database First 的方式進行。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;認識orm&#34;&gt;認識ORM&lt;/h2&gt;
-&lt;p&gt;在了解Entity Framework之前我們需要先了解ORM是什麼?&lt;/p&gt;
-&lt;p&gt;程式設計師過去為了要連結存取資料庫時需要去學習資料庫指令，所以研究出如何用程式設計模型和資料庫結合在一起，因而誕生出物件關聯對應&lt;strong&gt;Object Relationship Mapping&lt;/strong&gt;  ，可以代替你去和資料庫做溝通並且幫我們把資料自動轉成物件的工具。&lt;/p&gt;</description>
+&lt;/blockquote&gt;</description>
     </item>
     
   </channel>
